@@ -28,7 +28,7 @@
 <script setup>
 import '@/assets/auth.css'
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const endpoint = 'http://localhost:8000/api/auth/register'
 const name = ref('')
@@ -55,4 +55,11 @@ const register = async () => {
     }
 }
 
+onMounted(() => {
+  document.body.classList.add("login-view");
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("login-view");
+});
 </script>

@@ -1,33 +1,26 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh; 
-      margin: 0;  
-      background: linear-gradient(135deg, #800020 10%, #ff6b6b 90%);
-      font-family: Arial, sans-serif;
-  }
-  
-  
-  
-  .login-container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 400px; 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.login-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  margin: 0;  
+  background: linear-gradient(135deg, #800020 10%, #ff6b6b 90%);
+  font-family: Arial, sans-serif;
+}
+
+/* Resto de los estilos se mantienen igual */
+.login-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
   
   h2 {
     margin-bottom: 20px;
@@ -37,28 +30,31 @@
   }
   
   .input-container {
+    width: 100%; /* Asegura que el contenedor no exceda el ancho del formulario */
+    display: flex;
+    align-items: center;
     position: relative;
-    margin-bottom: 15px;
+  }
+  
+  .input-container input {
+    width: 100%; 
+    padding: 12px 12px 12px 35px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin: 5px auto; 
   }
   
   .input-container i {
     position: absolute;
-    left: 12px;
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
     color: #c31432;
   }
   
-  .input-container input {
-    width: 100%;
-    padding: 12px 12px 12px 35px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  /* Enlace para recuperar contraseña */
   .forgot-password {
     display: block;
     margin: 10px 0;
@@ -71,7 +67,6 @@
     text-decoration: underline;
   }
   
-  /* Botón de login */
   .login-button {
     width: 100%;
     padding: 12px;

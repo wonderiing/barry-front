@@ -16,10 +16,12 @@
 
 </template>
 
+
+
 <script setup lang="ts">
 import '@/assets/auth.css'
 
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import axios from 'axios';
 
 const email = ref('');
@@ -30,7 +32,7 @@ const login = async () => {
   try {
     const response = await axios.post(endpoint, {
       email: email.value,
-      password_hash: password.value, // Asegúrate de que el backend espera "password_hash"
+      password_hash: password.value, 
     });
     
     const {message, token} = response.data
@@ -44,4 +46,12 @@ const login = async () => {
     console.error(err);
   }
 }
+
+onMounted(() => {
+  document.body.classList.add("login-view");
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("login-view");
+});
 </script>
