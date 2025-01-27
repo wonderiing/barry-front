@@ -20,9 +20,9 @@
 
 <script setup lang="ts">
 import '@/assets/auth.css'
-
 import { onMounted, onUnmounted, ref } from 'vue';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 
 const email = ref('');
 const password = ref('');
@@ -37,6 +37,11 @@ const login = async () => {
     
     const {message, token} = response.data
     
+    const decodedToken = jwtDecode(token) as {userId: string}
+    const userId = decodedToken.userId
+
+
+    localStorage.setItem('user_id', userId)
     localStorage.setItem('token', token)
 
     alert(message)

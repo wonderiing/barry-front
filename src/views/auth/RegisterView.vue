@@ -18,7 +18,7 @@
         <i class="fas fa-lock"></i>
         <input type="password" placeholder="password" v-model="password" required />
       </div>
-      <button type="submit" class="login-button">Register</button>
+      <button type="submit" class="login-button">Signup</button>
       <br>
       <br>
     </form>
