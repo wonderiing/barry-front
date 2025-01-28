@@ -5,6 +5,15 @@
         <li><a href="#">Inicio</a></li>
         <li><a href="#">Servicios</a></li>
         <li><a href="#">Contacto</a></li>
+        <button class="home-button" id="homeButton">
+                <img src="../../assets/images/846449.png" alt="" class="home-icon">
+        </button>
+        <button class="notification-button" id="notificationButton">
+                <img src="/src/assets/images/notification.png" alt="" class="notification-icon">
+            </button>
+            <button class="perfil-button" id="perfilButton"> 
+                <img src="/src/assets/images/profile.png" alt="" class="perfil-icon">
+            </button>
       </ul>
     </nav>
 
@@ -44,4 +53,37 @@
     text-decoration: underline;
   }
 
+  .home-button{
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 2px 5px 5px rgb(191, 187, 187);
+}
+.home-icon{
+    width: 30px;
+}
+
+.notification-button {
+    color: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 2px 5px 5px rgb(191, 187, 187);
+    border: none;
+}
+
+.notification-icon{
+    width: 30px;
+}
+
+.perfil-button {
+    color: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 2px 5px 5px rgb(191, 187, 187);
+    border: none;
+}
+
+.perfil-icon{
+    width: 30px;
+}
 </style>
