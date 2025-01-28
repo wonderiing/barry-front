@@ -7,9 +7,11 @@
           <div class="logo-container">
             <span class="logo">Barry</span>
           </div>
-          <div class="nav-links">
-            <router-link :to="{name: 'login'}" class="btn-primary">Login</router-link>
-          </div>
+          <div class="nav-links" >
+          <router-link class="btn-primary" v-if="isToken" :to="{ name: 'dashboard' }">Dashboard</router-link>
+        <router-link  v-else :to="{ name: 'login' }" class="btn-primary">Login</router-link>
+        </div>
+
         </div>
       </div>
     </nav>
@@ -21,7 +23,7 @@
           <main class="hero-main">
             <div class="hero-text">
               <h1 class="hero-title">
-                <span>Toma el control de tus</span>
+                <span>Toma el control de tus </span>
                 <span class="text-primary">finanzas personales</span>
               </h1>
               <p class="hero-description">
@@ -99,5 +101,21 @@
 
 <script setup>
 import '@/assets/landing.css'
+import {onMounted, ref, watchEffect} from 'vue'
+
+const isToken = ref(false)
+
+const checkToken = () => {
+  const token = localStorage.getItem('token')
+  isToken.value = !!token
+}
+
+onMounted(() => {
+  checkToken();
+})
+
+watchEffect(() => {
+  checkToken();
+})
 </script>
 

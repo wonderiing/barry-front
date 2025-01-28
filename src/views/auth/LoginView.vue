@@ -47,7 +47,7 @@ const login = async () => {
     localStorage.setItem('token', token)
 
     alert(message)
-    router.replace({name: 'dashboard'})
+    router.replace({name: 'home'})
   } catch (err) {
     alert('Algo fallo')
     console.error(err);

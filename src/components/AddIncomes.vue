@@ -1,27 +1,20 @@
 <template>
     <br>
     <div class="form-container">
-      <h2>Registrar un Gasto</h2>
-      <form @submit.prevent="submitExpense">
+      <h2>Registrar un Ingreso</h2>
+      <form @submit.prevent="submitIncome">
         <div class="form-group">
           <label for="name">Monto: </label>
           <input type="number" id="name" v-model="mount" required step="any">
         </div>
-        <div class="form-group" >
-          <label for="subject">Categoria:</label>
-          <select id="subject" v-model="categoryId" >
-            <option value="">Selecciona una Categoria</option>
-            <option  v-for="category in categoryList" :key="category.id" :value="category.id">{{ category.name }}</option>
-     
-          </select>
-        </div>
+        
         <div class="form-group">
           <label for="message">Descripcion:</label>
           <textarea id="message"  rows="4" required v-model="description"></textarea>
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'gastos'}">Volver</router-link>
+        <router-link :to="{name: 'ganancias'}">Volver</router-link>
         
       </form>
 
@@ -29,46 +22,30 @@
   </template>
 
 <script setup lang="ts">
-import generalGet from '@/helpers/generalGet';
 import axios from '../helpers/axios';
-import { onMounted, ref } from 'vue';
-import type { Category } from '@/interfaces/category.interface';
-import { useRouter } from 'vue-router';
+import {ref} from 'vue'
+import {useRouter} from 'vue-router'
 
-const categoryId = ref(null)
 const mount = ref()
 const description = ref('')
 const userId = localStorage.getItem('user_id')
-const categoryList = ref<Category[]>([])
 const router = useRouter()
 
-const getCategories = async () => {
-    const response = await generalGet('http://localhost:8000/api/category')
-    categoryList.value = response
 
-}
-
-const submitExpense = async() => {
-  try{  const endpoint = 'http://localhost:8000/api/expenses'
+const submitIncome = async() => {
+  try{  const endpoint = 'http://localhost:8000/api/incomes'
     const response = await axios.post(endpoint, {
         mount: mount.value,
         description: description.value,
         user_id: userId,
-        category_id: categoryId.value
     })
-    console.log(response.data)
     alert('Registro Exitoso')
-    router.replace({name: 'gastos'})
+    router.replace({name: 'ganancias'})
     } catch(err) {
         alert('algo fallo')
     }
 } 
 
-
-
-onMounted(async() => {
-    await getCategories()
-})
 </script>
 
 <style scoped>

@@ -9,6 +9,10 @@ import DashBoardView from '@/views/landing/DashBoardView.vue'
 import GastosDetailed from '@/views/landing/detailed/GastosDetailed.vue'
 import GananciasDetailed from '@/views/landing/detailed/GananciasDetailed.vue'
 import AddExpense from '@/components/AddExpense.vue'
+import EditGasto from '@/views/landing/detailed/EditGasto.vue'
+import AddIncomes from '@/components/AddIncomes.vue'
+import EditGanancia from '@/views/landing/detailed/EditGanancia.vue'
+import isAuthenticatedGuard from '@/guards/isAuth.guard'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +44,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'page',
+      beforeEnter: [isAuthenticatedGuard],
       component: LayoutView,
       children:[
         {
@@ -58,15 +63,38 @@ const router = createRouter({
           component: GastosDetailed
         },
         {
-          path: '/ganancias',
+          path: '/ingresos',
           name: 'ganancias',
           component: GananciasDetailed
         },
         {
-          path: '/add-expense',
+          path: '/add-gasto',
           name: 'add-expense',
           component: AddExpense
-        }
+        },
+
+       { path: '/edit-gasto/:id',
+        name: 'edit-gasto',
+        props: (route) => {
+          const id = Number(route.params.id)
+          return isNaN(id) ? {id: 1} : {id}
+        },
+        component: EditGasto
+      },
+      {
+        path: '/add-ingreso',
+        name: 'add-ingreso',
+        component: AddIncomes
+      },
+      { 
+        path: '/edit-ingreso/:id',
+        name: 'edit-ingreso',
+        props: (route) => {
+          const id = Number(route.params.id)
+          return isNaN(id) ? {id: 1} : {id}
+        },
+        component: EditGanancia
+      },
       ]
     }
   

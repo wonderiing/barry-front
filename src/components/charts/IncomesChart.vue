@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105">
-      <h3 class="text-xl font-semibold text-gray-700 mb-4">Ganancias</h3>
+      <h3 class="text-xl font-semibold text-gray-700 mb-4">Ingresos</h3>
       <div class="chart-container">
         <canvas ref="revenueChartCanvas"></canvas>
       </div>

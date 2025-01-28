@@ -1,11 +1,11 @@
 <template>
     <br>
     <div class="form-container">
-      <h2>Registrar un Gasto</h2>
-      <form @submit.prevent="submitExpense">
+      <h2>Editar un Gasto</h2>
+      <form @submit.prevent="editExpense" >
         <div class="form-group">
-          <label for="name">Monto: </label>
-          <input type="number" id="name" v-model="mount" required step="any">
+          <label for="name" >Mount</label>
+          <input type="number" id="name" required step="any" v-model="mount">
         </div>
         <div class="form-group" >
           <label for="subject">Categoria:</label>
@@ -28,47 +28,57 @@
     </div>
   </template>
 
-<script setup lang="ts">
-import generalGet from '@/helpers/generalGet';
-import axios from '../helpers/axios';
-import { onMounted, ref } from 'vue';
-import type { Category } from '@/interfaces/category.interface';
-import { useRouter } from 'vue-router';
 
-const categoryId = ref(null)
+<script setup lang="ts">
+import type { Category } from '@/interfaces/category.interface';
+import generalGet from '@/helpers/generalGet';
+import {onMounted, ref} from 'vue'
+import type { ExpensesByUser } from '@/interfaces/expenses.interface';
+import { useRoute, useRouter } from 'vue-router';
+import axios  from '@/helpers/axios';
+
 const mount = ref()
-const description = ref('')
-const userId = localStorage.getItem('user_id')
+const description = ref()
+const categoryId = ref(null)
 const categoryList = ref<Category[]>([])
-const router = useRouter()
+const expense = ref<ExpensesByUser>()
+const router = useRoute()
+const endpoint = `http://localhost:8000/api/expenses/${router.params.id}`
+const backTo = useRouter()
 
 const getCategories = async () => {
     const response = await generalGet('http://localhost:8000/api/category')
     categoryList.value = response
-
 }
 
-const submitExpense = async() => {
-  try{  const endpoint = 'http://localhost:8000/api/expenses'
-    const response = await axios.post(endpoint, {
-        mount: mount.value,
-        description: description.value,
-        user_id: userId,
-        category_id: categoryId.value
-    })
-    console.log(response.data)
-    alert('Registro Exitoso')
-    router.replace({name: 'gastos'})
-    } catch(err) {
-        alert('algo fallo')
+const getExpense = async () => {
+    if(router.params.id) {
+
+        const response = await generalGet(endpoint)
+        expense.value = response
+        mount.value = expense.value?.mount
+        description.value = expense.value?.description
     }
-} 
+}
 
+const editExpense = async() => {
+    if (router.params.id) {
+        const response = await axios.put(endpoint, {
+            mount: mount.value,
+            description: description.value,
+            category_id: categoryId.value
+        })
+        console.log(response.data)
+        alert('Edicion exitosa')
+        backTo.replace({name: 'gastos'})
+    }
+}
 
-
-onMounted(async() => {
-    await getCategories()
+onMounted(async()=> {
+    await getCategories();
+    await getExpense();
 })
+
 </script>
 
 <style scoped>

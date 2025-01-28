@@ -1,74 +1,70 @@
 <template>
     <br>
     <div class="form-container">
-      <h2>Registrar un Gasto</h2>
-      <form @submit.prevent="submitExpense">
+      <h2>Editar un Ingreso</h2>
+      <form @submit.prevent="editExpense" >
         <div class="form-group">
-          <label for="name">Monto: </label>
-          <input type="number" id="name" v-model="mount" required step="any">
+          <label for="name" >Mount</label>
+          <input type="number" id="name" required step="any" v-model="mount">
         </div>
-        <div class="form-group" >
-          <label for="subject">Categoria:</label>
-          <select id="subject" v-model="categoryId" >
-            <option value="">Selecciona una Categoria</option>
-            <option  v-for="category in categoryList" :key="category.id" :value="category.id">{{ category.name }}</option>
-     
-          </select>
-        </div>
+
         <div class="form-group">
           <label for="message">Descripcion:</label>
           <textarea id="message"  rows="4" required v-model="description"></textarea>
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'gastos'}">Volver</router-link>
+        <router-link :to="{name: 'ganancias'}">Volver</router-link>
         
       </form>
 
     </div>
   </template>
 
+
 <script setup lang="ts">
 import generalGet from '@/helpers/generalGet';
-import axios from '../helpers/axios';
-import { onMounted, ref } from 'vue';
-import type { Category } from '@/interfaces/category.interface';
+import {onMounted, ref} from 'vue'
+import type { IncomesByUser } from '@/interfaces/incomes.interface';
+import { useRoute } from 'vue-router';
+import axios  from '@/helpers/axios';
 import { useRouter } from 'vue-router';
 
-const categoryId = ref(null)
 const mount = ref()
-const description = ref('')
-const userId = localStorage.getItem('user_id')
-const categoryList = ref<Category[]>([])
-const router = useRouter()
+const description = ref()
+const router = useRoute()
+const incomes = ref<IncomesByUser>()
+const endpoint = `http://localhost:8000/api/incomes/${router.params.id}`
 
-const getCategories = async () => {
-    const response = await generalGet('http://localhost:8000/api/category')
-    categoryList.value = response
+const backTo = useRouter()
 
+const getIncomes = async () => {
+    if(router.params.id) {
+
+        const response = await generalGet(endpoint)
+        incomes.value = response
+        mount.value = incomes.value?.mount
+        description.value = incomes.value?.description
+    }
 }
 
-const submitExpense = async() => {
-  try{  const endpoint = 'http://localhost:8000/api/expenses'
-    const response = await axios.post(endpoint, {
-        mount: mount.value,
-        description: description.value,
-        user_id: userId,
-        category_id: categoryId.value
-    })
-    console.log(response.data)
-    alert('Registro Exitoso')
-    router.replace({name: 'gastos'})
-    } catch(err) {
-        alert('algo fallo')
+const editExpense = async() => {
+    if (router.params.id) {
+        const response = await axios.put(endpoint, {
+            mount: mount.value,
+            description: description.value,
+        })
+        console.log(response.data)
+        alert('Edicion exitosa')
+        backTo.replace({name : 'ganancias'})
+
     }
-} 
+}
 
-
-
-onMounted(async() => {
-    await getCategories()
+onMounted(async()=> {
+    await getIncomes();
 })
+
 </script>
 
 <style scoped>
