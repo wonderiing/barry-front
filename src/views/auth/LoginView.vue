@@ -23,7 +23,9 @@ import '@/assets/auth.css'
 import { onMounted, onUnmounted, ref } from 'vue';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const email = ref('');
 const password = ref('');
 const endpoint = 'http://localhost:8000/api/auth/login';
@@ -45,7 +47,7 @@ const login = async () => {
     localStorage.setItem('token', token)
 
     alert(message)
-
+    router.replace({name: 'dashboard'})
   } catch (err) {
     alert('Algo fallo')
     console.error(err);

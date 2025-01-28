@@ -4,6 +4,7 @@
       <div class="chart-container">
         <canvas ref="expensesChartCanvas"></canvas>
       </div>
+      
     </div>
   </template>
   
@@ -38,7 +39,7 @@
           {
             label: label,
             data: data,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#B82132", "#D2665A", "#F2B28C", "#F6DED8", "#A94A4A"],
           },
         ],
       },

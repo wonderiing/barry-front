@@ -6,6 +6,9 @@ import LandingView from '@/views/landing/LandingView.vue'
 import LayoutView from '@/views/layout/LayoutView.vue'
 import ChatBotView from '@/views/chat/ChatBotView.vue'
 import DashBoardView from '@/views/landing/DashBoardView.vue'
+import GastosDetailed from '@/views/landing/detailed/GastosDetailed.vue'
+import GananciasDetailed from '@/views/landing/detailed/GananciasDetailed.vue'
+import AddExpense from '@/components/AddExpense.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +51,21 @@ const router = createRouter({
           path: '/dashboard',
           name: 'dashboard',
           component: DashBoardView
+        },
+        {
+          path: '/gastos',
+          name: 'gastos',
+          component: GastosDetailed
+        },
+        {
+          path: '/ganancias',
+          name: 'ganancias',
+          component: GananciasDetailed
+        },
+        {
+          path: '/add-expense',
+          name: 'add-expense',
+          component: AddExpense
         }
       ]
     }

@@ -29,7 +29,9 @@
 import '@/assets/auth.css'
 import axios from 'axios';
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const endpoint = 'http://localhost:8000/api/auth/register'
 const name = ref('')
 const lastName = ref('')
@@ -48,7 +50,7 @@ const register = async () => {
         })
 
         alert('Registro exitoso!')
-        
+        router.replace({name: 'login'})
     } catch (err) {
         alert('Algo fallo')
         console.error(err)

@@ -26,7 +26,6 @@
   let currentChart: Chart | null = null;
   
   const createChart = (type: keyof ChartTypeRegistry, ctx: any, label: string, data: number[], labels: string[]) => {
-    // Destroy existing chart if it exists
     if (currentChart) {
       currentChart.destroy();
     }
@@ -40,8 +39,8 @@
           {
             label: label,
             data: data,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            borderColor: "#36A2EB",
+            backgroundColor: ['#F6DED8'],
+            borderColor: "#B82132",
             tension: 0.4,
             fill: false,
           },

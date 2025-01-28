@@ -2,12 +2,10 @@
     <nav class="navbar">
       <div class="logo">Barry</div>
       <ul class="nav-links">
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Servicios</a></li>
-        <li><a href="#">Contacto</a></li>
-        <button class="home-button" id="homeButton">
+        <li><router-link :to="{name: 'chatbot'}" >Chatbot</router-link></li>
+        <router-link class="home-button" :to="{name: 'dashboard'}" id="homeButton">
                 <img src="../../assets/images/846449.png" alt="" class="home-icon">
-        </button>
+        </router-link>
         <button class="notification-button" id="notificationButton">
                 <img src="/src/assets/images/notification.png" alt="" class="notification-icon">
             </button>
