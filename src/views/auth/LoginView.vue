@@ -24,6 +24,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import { useRouter } from 'vue-router';
+import type { TokenDecoded } from '@/interfaces/token.interface';
 
 const router = useRouter()
 const email = ref('');
@@ -39,19 +40,39 @@ const login = async () => {
     
     const {message, token} = response.data
     
-    const decodedToken = jwtDecode(token) as {userId: string}
-    const userId = decodedToken.userId
+    const decodedToken = jwtDecode<TokenDecoded>(token) 
+    const userId =  decodedToken.userId
+    const exp =  decodedToken.exp
 
 
-    localStorage.setItem('user_id', userId)
+    localStorage.setItem('user_id', String(userId))
     localStorage.setItem('token', token)
+    localStorage.setItem('expiresIn', String(exp))
 
     alert(message)
+    checkTokenValidity(exp)
     router.replace({name: 'home'})
   } catch (err) {
     alert('Algo fallo')
     console.error(err);
   }
+}
+
+const checkTokenValidity = (exp: number) => {
+
+  const expiration = exp * 1000 - Date.now();
+
+  if (expiration > 0 ) {
+  setTimeout(() => {
+
+    localStorage.removeItem('token')
+    localStorage.removeItem('exp')
+    localStorage.removeItem('user_id')
+    router.replace({name: 'login'})
+  }, expiration
+  );
+  }
+
 }
 
 onMounted(() => {

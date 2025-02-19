@@ -1,94 +1,119 @@
 <template>
-  <div class="flex flex-col items-center gap-6 p-6 bg-gray-100 min-h-screen">
-    <br>
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">DASHBOARD</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 w-full max-w-5xl">
-      <ExpensesChart :expenses="expensesList" />
-      <IncomesChart :incomes="incomesList" />
+  <div class="dashboard-container">
+    <!-- Encabezado -->
+    <div class="header">
+      <h2 class="title">Performance Report</h2>
+      <button class="add-chart-btn">+ Add Chart</button>
     </div>
-    
-    <div class="buttons-container">
-      <router-link :to="{name: 'gastos'}" class="btn-red">Ver Gastos</router-link>
 
-      <router-link :to="{name: 'ganancias'}" class="btn-red">Ver Ganancias</router-link>
+    <!-- Métricas Principales -->
+    <div class="metrics-container">
+      <div class="metric-box">
+        <h3>Gastos Totales</h3>
+        <p class="metric-value">{{ expenseMountPerMonth }}</p>
+        <span class="positive">+3.5%</span>
+      </div>
+
+      <div class="metric-box">
+        <h3>Ingresos Totales</h3>
+        <p class="metric-value">{{ incomesMountPerMonth }}</p>
+        <span class="negative">-15%</span>
+      </div>
+
+      <div class="metric-box">
+        <h3>Total Applications</h3>
+        <p class="metric-value">120</p>
+      </div>
+
+      <div class="metric-box">
+        <h3>Total Sales</h3>
+        <p class="metric-value">$18,000</p>
+        <span class="positive">+2%</span>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="charts-container">
+      <div class="chart-box">
+        <h3>Gastos</h3>
+        <ExpensesChart :expenses="expensesList" />
+      </div>
+
+      <div class="chart-box">
+        <h3>Ganancias</h3>
+        <IncomesChart :incomes="incomesList" />
+      </div>
+    </div>
+
+    <!-- Botones de Navegación -->
+    <div class="buttons-container">
+      <router-link :to="{ name: 'gastos' }" class="btn red">Ver Gastos</router-link>
+      <router-link :to="{ name: 'ganancias' }" class="btn blue">Ver Ganancias</router-link>
     </div>
   </div>
 </template>
 
 
-  <script setup lang="ts">
-  import { onMounted } from 'vue';
-  import ExpensesChart from '@/components/charts/ExpensesChart.vue';
-  import IncomesChart from '@/components/charts/IncomesChart.vue';
-  import { useFinancialData } from '@/helpers/charts';
 
-  const {expensesList, incomesList, expensesByUser, incomesByUser} = useFinancialData();
 
-  onMounted(async () => {
-    await expensesByUser();
-    await incomesByUser();
-  });
-  </script>
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import ExpensesChart from '@/components/charts/ExpensesChart.vue';
+import IncomesChart from '@/components/charts/IncomesChart.vue';
+import { useFinancialData } from '@/helpers/charts';
+import '@/assets/dashboard.css'
+import axios from '@/helpers/axios'
+
+const router = useRouter();
+const { expensesList, incomesList, expensesByUser, incomesByUser } = useFinancialData();
+
+const expensesMountPerMonthEp = 'http://localhost:8000/api/expenses/month'
+const incomesMountPerMonthEp = 'http://localhost:8000/api/incomes/month'
+
+const expenseMountPerMonth = ref()
+const incomesMountPerMonth = ref()
+
+const infoByMonth = async () => {
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear()
+  const userId = localStorage.getItem('user_id')
   
-  <style scoped>
+  try {
 
-.buttons-container {
-  display: flex;
-  gap: 16px;
-  margin-top: 32px;
+    const expenseRequest = await axios.post(expensesMountPerMonthEp, {
+      year: currentYear,
+      month: currentMonth,
+      userId: userId
+    })
+    const incomesRequest = await axios.post(incomesMountPerMonthEp, {
+      year: currentYear,
+      month: currentMonth,
+      userId: userId
+    })
+
+    axios.all([expenseRequest, incomesRequest])
+    .then(axios.spread((expenseResponse, incomesResponse) => {
+      expenseMountPerMonth.value = expenseResponse.data.TotalExpenesPerMonth
+      incomesMountPerMonth.value = incomesResponse.data.TotalIncomesPerMonth
+    }))
+   
+
+  } catch (err) {
+    console.error(err)
+  }
+
 }
 
-.btn-red {
-  background-color: #ef4444; /* Rojo */
-  color: white;
-  font-weight: 600; /* Texto un poco más delgado */
-  font-size: 1.125rem; /* Tamaño de fuente más pequeño que "xl" */
-  padding: 12px 24px; /* Tamaño de padding ajustado */
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
 
-.btn-red:hover {
-  background-color: #dc2626; /* Rojo más oscuro */
-  transform: scale(1.05); /* Un poco de zoom al pasar el mouse */
-}
 
-.btn-red:active {
-  transform: scale(1);
-}
 
-  body {
-    background-color: #f8fafc;
-  }
-  
-  .bg-white {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .bg-white:hover {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2, h3 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  h2 {
-    font-weight: 700;
-  }
-  
-  h3 {
-    font-weight: 600;
-    color: #2d3748;
-  }
-  
-  canvas {
-  max-width: 100% ;
-  height: 100%; 
-}
-  </style>
-  
+onMounted(async () => {
+  await expensesByUser();
+  await incomesByUser();
+  await infoByMonth();
+});
+</script>
+

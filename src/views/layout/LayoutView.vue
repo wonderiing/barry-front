@@ -3,6 +3,7 @@
       <div class="logo">Barry</div>
       <ul class="nav-links">
         <li><router-link :to="{name: 'chatbot'}" >Chatbot</router-link></li>
+        <li><button @click="deleteToken" >Logout</button></li>
         <router-link class="home-button" :to="{name: 'dashboard'}" id="homeButton">
                 <img src="../../assets/images/846449.png" alt="" class="home-icon">
         </router-link>
@@ -19,6 +20,28 @@
 
   </template>
   
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+const deleteToken = () => {
+
+  try {
+
+    localStorage.removeItem('token')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('expiresIn')
+  
+    router.replace({name: 'login'})
+  } catch (err) {
+    console.error(err)
+  }
+
+}
+
+</script>
+
   <style scoped>
   .navbar {
     display: flex;
