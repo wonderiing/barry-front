@@ -13,7 +13,7 @@
       <br>
     </form>
     <router-link :to="{name: 'register'}" class="forgot-password">Signup here!</router-link> 
-
+    <button @click="loginWithGoogle" class="forgot-password">Login With Google!</button> 
 </template>
 
 
@@ -30,6 +30,13 @@ const router = useRouter()
 const email = ref('');
 const password = ref('');
 const endpoint = 'http://localhost:8000/api/auth/login';
+const endpointGoogle = "http://localhost:8000/auth/google"
+
+const loginWithGoogle = async () => {
+
+  window.location.href = endpointGoogle;
+
+}
 
 const login = async () => {
   try {
@@ -41,6 +48,7 @@ const login = async () => {
     const {message, token} = response.data
     
     const decodedToken = jwtDecode<TokenDecoded>(token) 
+    console.log(decodedToken)
     const userId =  decodedToken.userId
     const exp =  decodedToken.exp
 
@@ -75,7 +83,7 @@ const checkTokenValidity = (exp: number) => {
 
 }
 
-onMounted(() => {
+onMounted(async () => {
   document.body.classList.add("login-view");
 });
 

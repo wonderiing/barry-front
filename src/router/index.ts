@@ -14,6 +14,7 @@ import AddIncomes from '@/components/AddIncomes.vue'
 import EditGanancia from '@/views/landing/detailed/EditGanancia.vue'
 import isAuthenticatedGuard from '@/guards/isAuth.guard'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -41,6 +42,12 @@ const router = createRouter({
       name: 'home',
       component: LandingView
     },
+      {
+        path: '/auth/success',
+        name: 'auth-success',
+        component: () => import("@/views/auth/AuthSuccess.vue"),
+      },
+    
     {
       path: '/home',
       name: 'page',
