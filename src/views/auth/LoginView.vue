@@ -12,8 +12,8 @@
       <button type="submit" class="login-button">Login</button>
       <br>
     </form>
+    <button class="login-button" @click="loginWithGoogle">Login With Google!</button> 
     <router-link :to="{name: 'register'}" class="forgot-password">Signup here!</router-link> 
-    <button @click="loginWithGoogle" class="forgot-password">Login With Google!</button> 
 </template>
 
 

@@ -2,22 +2,19 @@
   <div class="dashboard-container">
     <!-- Encabezado -->
     <div class="header">
-      <h2 class="title">Performance Report</h2>
-      <button class="add-chart-btn">+ Add Chart</button>
+      <h2 class="title">Dashboard</h2>
     </div>
 
     <!-- Métricas Principales -->
     <div class="metrics-container">
       <div class="metric-box">
-        <h3>Gastos Totales</h3>
+        <h3>Gastos Mensuales</h3>
         <p class="metric-value">{{ expenseMountPerMonth }}</p>
-        <span class="positive">+3.5%</span>
       </div>
 
       <div class="metric-box">
-        <h3>Ingresos Totales</h3>
+        <h3>Ingresos Mensuales</h3>
         <p class="metric-value">{{ incomesMountPerMonth }}</p>
-        <span class="negative">-15%</span>
       </div>
 
       <div class="metric-box">

@@ -57,7 +57,7 @@ const router = createRouter({
         {
           path: '/chatbot',
           name: 'chatbot',
-          component: ChatBotView
+          component: () => import("@/views/chat/ChatBotView.vue")
         },
         {
           path: '/dashboard',
@@ -102,6 +102,11 @@ const router = createRouter({
         },
         component: EditGanancia
       },
+      {
+        path: '/crypto',
+        name: 'crypto',
+        component: () => import("@/views/crypto/CryptoView.vue")
+      }
       ]
     }
   
