@@ -8,12 +8,14 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import type{ TokenDecoded } from '@/interfaces/token.interface';
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const router = useRouter();
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:8000/get-token", { 
+    const response = await axios.get(`${API_URL}/get-token`, { 
       withCredentials: true, 
     });
     const token = response.data.token;

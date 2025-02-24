@@ -42,12 +42,14 @@ const description = ref()
 const categoryId = ref(null)
 const categoryList = ref<Category[]>([])
 const expense = ref<ExpensesByUser>()
+const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRoute()
-const endpoint = `http://localhost:8000/api/expenses/${router.params.id}`
+const endpoint = `${API_URL}/api/expenses/${router.params.id}`
 const backTo = useRouter()
 
 const getCategories = async () => {
-    const response = await generalGet('http://localhost:8000/api/category')
+    const response = await generalGet(`${API_URL}/api/category`)
     categoryList.value = response
 }
 

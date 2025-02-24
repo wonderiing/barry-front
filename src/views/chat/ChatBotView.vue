@@ -31,10 +31,10 @@
         
         <textarea
           placeholder="Escribe un mensaje..."
-          rows="1" v-model="message"
+          rows="1" @keyup.enter="sendMessage" v-model="message"
         ></textarea>
 
-        <button class="send-btn" @click="sendMessage">
+        <button class="send-btn"  @click="sendMessage">
           <span>➤</span>
         </button>
       </div>
@@ -56,9 +56,11 @@ import { ref } from 'vue';
 const message = ref('');
 const messages = ref<{ type: string, content: string, time: string }[]>([]);
 const isTyping = ref(false); 
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const userId = localStorage.getItem('user_id');
-const endpoint = 'http://localhost:8000/api/chatgpt';
+const endpoint = `${API_URL}/api/chatgpt`;
 
 const sendMessage = async () => {
   if (message.value.trim()) {

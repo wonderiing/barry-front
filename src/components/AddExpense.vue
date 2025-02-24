@@ -34,6 +34,8 @@ import axios from '../helpers/axios';
 import { onMounted, ref } from 'vue';
 import type { Category } from '@/interfaces/category.interface';
 import { useRouter } from 'vue-router';
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const categoryId = ref(null)
 const mount = ref()
@@ -43,13 +45,13 @@ const categoryList = ref<Category[]>([])
 const router = useRouter()
 
 const getCategories = async () => {
-    const response = await generalGet('http://localhost:8000/api/category')
+    const response = await generalGet(`${API_URL}/api/category`)
     categoryList.value = response
 
 }
 
 const submitExpense = async() => {
-  try{  const endpoint = 'http://localhost:8000/api/expenses'
+  try{  const endpoint = `${API_URL}/api/expenses`
     const response = await axios.post(endpoint, {
         mount: mount.value,
         description: description.value,

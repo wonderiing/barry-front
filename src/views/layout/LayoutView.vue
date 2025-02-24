@@ -4,16 +4,8 @@
       <ul class="nav-links">
         <li><router-link :to="{name: 'chatbot'}" >Chatbot</router-link></li>
         <li><router-link :to="{name: 'crypto'}" >Crypto</router-link></li>
+        <li><router-link :to="{name: 'dashboard'}" >Dashboard</router-link></li>
         <li><a @click="deleteToken" >Logout</a></li>
-        <router-link class="home-button" :to="{name: 'dashboard'}" id="homeButton">
-                <img src="../../assets/images/846449.png" alt="" class="home-icon">
-        </router-link>
-        <button class="notification-button" id="notificationButton">
-                <img src="/src/assets/images/notification.png" alt="" class="notification-icon">
-            </button>
-            <button class="perfil-button" id="perfilButton"> 
-                <img src="/src/assets/images/profile.png" alt="" class="perfil-icon">
-            </button>
       </ul>
     </nav>
 

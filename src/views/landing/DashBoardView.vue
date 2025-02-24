@@ -9,12 +9,12 @@
     <div class="metrics-container">
       <div class="metric-box">
         <h3>Gastos Mensuales</h3>
-        <p class="metric-value">{{ expenseMountPerMonth }}</p>
+        <p class="metric-value">$ {{ expenseMountPerMonth }}</p>
       </div>
 
       <div class="metric-box">
         <h3>Ingresos Mensuales</h3>
-        <p class="metric-value">{{ incomesMountPerMonth }}</p>
+        <p class="metric-value">$ {{ incomesMountPerMonth }}</p>
       </div>
 
       <div class="metric-box">
@@ -62,11 +62,12 @@ import { useFinancialData } from '@/helpers/charts';
 import '@/assets/dashboard.css'
 import axios from '@/helpers/axios'
 
+const API_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
 const { expensesList, incomesList, expensesByUser, incomesByUser } = useFinancialData();
 
-const expensesMountPerMonthEp = 'http://localhost:8000/api/expenses/month'
-const incomesMountPerMonthEp = 'http://localhost:8000/api/incomes/month'
+const expensesMountPerMonthEp = `${API_URL}/api/expenses/month`
+const incomesMountPerMonthEp = `${API_URL}/api/incomes/month`
 
 const expenseMountPerMonth = ref()
 const incomesMountPerMonth = ref()

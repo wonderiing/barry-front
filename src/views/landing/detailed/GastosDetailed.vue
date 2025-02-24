@@ -67,6 +67,8 @@ import axios from '@/helpers/axios';
 const { expensesList, expensesByUser } = useFinancialData();
 const filterDateInput = ref('');
 const filterDate = ref<Date | null>(null);
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
 // Parse MM/DD/YYYY format to Date object
 const parseDate = (dateString: string): Date | null => {
@@ -125,7 +127,7 @@ const resetFilter = () => {
 
 const deleteExpense = async (id: number) => {
   try {
-    const endpoint = `http://localhost:8000/api/expenses/${id}`;
+    const endpoint = `${API_URL}/api/expenses/${id}`;
     const response = await axios.delete(endpoint);
     expensesList.value = expensesList.value.filter(expense => expense.id !== id);
     console.log(response.data);

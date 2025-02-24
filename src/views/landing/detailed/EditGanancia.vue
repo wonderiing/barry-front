@@ -30,11 +30,13 @@ import { useRoute } from 'vue-router';
 import axios  from '@/helpers/axios';
 import { useRouter } from 'vue-router';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const mount = ref()
 const description = ref()
 const router = useRoute()
 const incomes = ref<IncomesByUser>()
-const endpoint = `http://localhost:8000/api/incomes/${router.params.id}`
+const endpoint = `${API_URL}/api/incomes/${router.params.id}`
 
 const backTo = useRouter()
 

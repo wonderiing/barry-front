@@ -30,9 +30,10 @@ import '@/assets/auth.css'
 import axios from 'axios';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const router = useRouter()
-const endpoint = 'http://localhost:8000/api/auth/register'
+const endpoint = `${API_URL}/api/auth/register`
 const name = ref('')
 const lastName = ref('')
 const email = ref('');

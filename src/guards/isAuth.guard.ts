@@ -6,6 +6,8 @@ const isAuthenticatedGuard = async (
     next: NavigationGuardNext
 ) => {
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const token = localStorage.getItem('token')
 
     if (!token) {
@@ -16,7 +18,7 @@ const isAuthenticatedGuard = async (
 
     try{
 
-        const response = await axios.get('http://localhost:8000/api/auth/validate-token', {
+        const response = await axios.get(`${API_URL}/api/auth/validate-token`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         return next();

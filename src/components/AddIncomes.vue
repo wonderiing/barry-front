@@ -25,6 +25,7 @@
 import axios from '../helpers/axios';
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
+const API_URL = import.meta.env.VITE_API_URL;
 
 const mount = ref()
 const description = ref('')
@@ -33,7 +34,7 @@ const router = useRouter()
 
 
 const submitIncome = async() => {
-  try{  const endpoint = 'http://localhost:8000/api/incomes'
+  try{  const endpoint = `${API_URL}/api/incomes`
     const response = await axios.post(endpoint, {
         mount: mount.value,
         description: description.value,

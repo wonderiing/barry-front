@@ -66,6 +66,8 @@ import axios from '@/helpers/axios'
 const {incomesList, incomesByUser} = useFinancialData()
 const filterDateInput = ref('');
 const filterDate = ref<Date | null>(null);
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
 // Parse MM/DD/YYYY format to Date object
 const parseDate = (dateString: string): Date | null => {
@@ -124,7 +126,7 @@ const resetFilter = () => {
 
 const deleteIncomes = async (id: number) => {
   try {
-    const response = await axios.delete(`http://localhost:8000/api/incomes/${id}`);
+    const response = await axios.delete(`${API_URL}/api/incomes/${id}`);
     incomesList.value = incomesList.value.filter(income => income.id !== id);
     alert('Eliminacion correcta');
   } catch (err) {

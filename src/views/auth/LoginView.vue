@@ -29,8 +29,10 @@ import type { TokenDecoded } from '@/interfaces/token.interface';
 const router = useRouter()
 const email = ref('');
 const password = ref('');
-const endpoint = 'http://localhost:8000/api/auth/login';
-const endpointGoogle = "http://localhost:8000/auth/google"
+const API_URL = import.meta.env.VITE_API_URL;
+
+const endpoint = `${API_URL}/api/auth/login`;
+const endpointGoogle = `${API_URL}/auth/google`
 
 const loginWithGoogle = async () => {
 
