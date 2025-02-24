@@ -5,7 +5,7 @@ import RegisterView from '@/views/auth/RegisterView.vue'
 import LandingView from '@/views/landing/LandingView.vue'
 import LayoutView from '@/views/layout/LayoutView.vue'
 import ChatBotView from '@/views/chat/ChatBotView.vue'
-import DashBoardView from '@/views/landing/DashBoardView.vue'
+import DashBoardView from "@/views/landing/DashBoardView.vue"
 import GastosDetailed from '@/views/landing/detailed/GastosDetailed.vue'
 import GananciasDetailed from '@/views/landing/detailed/GananciasDetailed.vue'
 import AddExpense from '@/components/AddExpense.vue'
