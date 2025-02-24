@@ -9,7 +9,9 @@
         <i class="fas fa-lock"></i>
         <input type="password" placeholder="Password" required v-model="password">
       </div>
+      <br>
       <button type="submit" class="login-button">Login</button>
+      <br>
       <br>
     </form>
     <button class="login-button" @click="loginWithGoogle">Login With Google!</button> 
