@@ -32,6 +32,19 @@ const processAuthToken = () => {
       return;
     }
     
+    // Decodificar el token con la librería jwt-decode
+    const decodedToken = jwtDecode<TokenDecoded>(token);
+    
+    // Guardar el ID de usuario en localStorage
+    if (decodedToken.userId) {
+      localStorage.setItem('user_id', decodedToken.userId.toString());
+    }
+    
+    // Guardar también el email si está disponible
+    if (decodedToken.email) {
+      localStorage.setItem('userEmail', decodedToken.email);
+    }
+    
     // Guardar el token en localStorage
     localStorage.setItem('token', token);
     
