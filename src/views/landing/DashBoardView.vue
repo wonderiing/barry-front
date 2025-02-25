@@ -120,7 +120,8 @@ const calculateBalance = () => {
     console.error("Valores no válidos para el cálculo:", incomes, expenses);
     balanceNeto.value = 0;
   } else {
-    balanceNeto.value = incomes - expenses;
+    balanceNeto.value = parseFloat((incomes - expenses).toFixed(2));
+
   }
 
   console.log("Balance Neto:", balanceNeto.value);
