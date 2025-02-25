@@ -33,7 +33,7 @@ const processAuthToken = () => {
     }
     
     // Guardar el token en localStorage
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('token', token);
     
     // Redireccionar a la página principal o dashboard
     router.push('/dashboard');
