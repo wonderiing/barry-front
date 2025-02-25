@@ -13,6 +13,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { jwtDecode } from 'jwt-decode';
 
 // Estado reactivo
 const loading = ref(true);
