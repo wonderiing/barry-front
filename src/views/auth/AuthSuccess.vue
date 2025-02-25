@@ -1,46 +1,84 @@
 <template>
-    <h1>Hola</h1>
+  <div class="auth-success">
+    <div v-if="loading" class="loading">
+      <p>Iniciando sesión...</p>
+    </div>
+    <div v-else-if="error" class="error">
+      <p>{{ error }}</p>
+      <button @click="redirectToLogin">Volver a intentar</button>
+    </div>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted } from 'vue';
+<script setup>
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import type{ TokenDecoded } from '@/interfaces/token.interface';
-const API_URL = import.meta.env.VITE_API_URL;
 
-
+// Estado reactivo
+const loading = ref(true);
+const error = ref(null);
 const router = useRouter();
 
-onMounted(async () => {
+// Procesar el token de autenticación
+const processAuthToken = () => {
   try {
-    const response = await axios.get(`${API_URL}/get-token`, { 
-      withCredentials: true, 
-    });
-    const token = response.data.token;
-
-    if (token) {
-      
-      const decodedToken = jwtDecode<TokenDecoded>(token);
-      const userId = decodedToken.userId;
-      const exp = decodedToken.exp;
-
-      console.log(decodedToken)
-
-      localStorage.setItem('user_id', String(userId));
-      localStorage.setItem('token', token);
-      localStorage.setItem('expiresIn', String(exp));
-
-      router.replace({ name: 'home' });
-    } else {
-      alert('No token found');
-      router.replace({ name: 'login' });
+    // Obtener el token de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (!token) {
+      error.value = 'No se encontró un token de autenticación';
+      loading.value = false;
+      return;
     }
-  } catch (error) {
-    console.error("Error al obtener el token:", error);
-    alert('Login failed');
-    router.replace({ name: 'login' });
+    
+    // Guardar el token en localStorage
+    localStorage.setItem('authToken', token);
+    
+    // Redireccionar a la página principal o dashboard
+    router.push('/dashboard');
+  } catch (err) {
+    console.error('Error al procesar el token:', err);
+    error.value = 'Ocurrió un error al procesar la autenticación';
+    loading.value = false;
   }
+};
+
+const redirectToLogin = () => {
+  router.push('/login');
+};
+
+// Ejecutar cuando el componente se monte
+onMounted(() => {
+  processAuthToken();
 });
 </script>
+
+<style scoped>
+.auth-success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+.loading, .error {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+}
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+}
+button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
