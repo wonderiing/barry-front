@@ -10,14 +10,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { jwtDecode } from 'jwt-decode';
+import type { TokenDecoded } from '@/interfaces/token.interface';
 
 // Estado reactivo
 const loading = ref(true);
-const error = ref(null);
+const error = ref('');
 const router = useRouter();
 
 // Procesar el token de autenticación
