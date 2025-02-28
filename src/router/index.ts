@@ -106,6 +106,11 @@ const router = createRouter({
         path: '/crypto',
         name: 'crypto',
         component: () => import("@/views/crypto/CryptoView.vue")
+      },
+      {
+        path: '/pdf',
+        name: 'pdf',
+        component: () => import("@/views/landing/pdf/GeneratePdf.vue")
       }
       ]
     }

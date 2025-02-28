@@ -25,8 +25,8 @@
       </div>
 
       <div class="metric-box">
-        <h3>Total Sales</h3>
-        <p class="metric-value">$18,000</p>
+        <h3>Generar Reporte PDF</h3>
+        <router-link :to="{name: 'pdf'}" class="btn red">🧾</router-link>
       </div>
     </div>
 
