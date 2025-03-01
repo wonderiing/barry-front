@@ -27,6 +27,7 @@ import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import { useRouter } from 'vue-router';
 import type { TokenDecoded } from '@/interfaces/token.interface';
+import { successAlert } from '@/helpers/succesAlert';
 
 const router = useRouter()
 const email = ref('');
@@ -61,9 +62,9 @@ const login = async () => {
     localStorage.setItem('token', token)
     localStorage.setItem('expiresIn', String(exp))
 
-    alert(message)
+    await successAlert("Login exitoso")    
     checkTokenValidity(exp)
-    router.replace({name: 'home'})
+    router.replace({name: 'dashboard'})
   } catch (err) {
     alert('Algo fallo')
     console.error(err);

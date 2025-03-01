@@ -30,6 +30,7 @@ import '@/assets/auth.css'
 import axios from 'axios';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { successAlert } from '@/helpers/succesAlert';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const router = useRouter()
@@ -50,7 +51,7 @@ const register = async () => {
             password_hash: password.value 
         })
 
-        alert('Registro exitoso!')
+        await successAlert("Registro exitoso")    
         router.replace({name: 'login'})
     } catch (err) {
         alert('Algo fallo')

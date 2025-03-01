@@ -21,10 +21,8 @@ const loading = ref(true);
 const error = ref('');
 const router = useRouter();
 
-// Procesar el token de autenticación
 const processAuthToken = () => {
   try {
-    // Obtener el token de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
     
@@ -34,23 +32,18 @@ const processAuthToken = () => {
       return;
     }
     
-    // Decodificar el token con la librería jwt-decode
     const decodedToken = jwtDecode<TokenDecoded>(token);
     
-    // Guardar el ID de usuario en localStorage
     if (decodedToken.userId) {
       localStorage.setItem('user_id', decodedToken.userId.toString());
     }
     
-    // Guardar también el email si está disponible
     if (decodedToken.email) {
       localStorage.setItem('userEmail', decodedToken.email);
     }
     
-    // Guardar el token en localStorage
     localStorage.setItem('token', token);
     
-    // Redireccionar a la página principal o dashboard
     router.push('/dashboard');
   } catch (err) {
     console.error('Error al procesar el token:', err);
@@ -63,7 +56,6 @@ const redirectToLogin = () => {
   router.push('/login');
 };
 
-// Ejecutar cuando el componente se monte
 onMounted(() => {
   processAuthToken();
 });

@@ -33,12 +33,12 @@
     <!-- Gráficos -->
     <div class="charts-container">
       <div class="chart-box">
-        <h3>Gastos</h3>
+        <h3>Total de Gastos</h3>
         <ExpensesChart :expenses="expensesList" />
       </div>
 
       <div class="chart-box">
-        <h3>Ganancias</h3>
+        <h3>Total de Ingresos</h3>
         <IncomesChart :incomes="incomesList" />
       </div>
     </div>

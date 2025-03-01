@@ -25,7 +25,6 @@
         </div>
       </div>
       
-      <!-- Opción 1: Descarga directa sin iframe -->
       <div v-if="pdfBlob" class="pdf-actions">
         <button @click="downloadPdf" class="download-btn">
           <span class="btn-icon">↓</span> Descargar PDF
@@ -35,7 +34,6 @@
         </button>
       </div>
       
-      <!-- Opción 2: Vista previa (usar solo si el iframe funciona en tu entorno) -->
       <div v-if="showPreview && pdfUrl" class="pdf-viewer">
         <h3>Vista previa del reporte:</h3>
         <div class="iframe-container">
@@ -59,17 +57,16 @@
   import { ref, onMounted, onUnmounted } from 'vue';
   import axios from 'axios';
   
-  // Estado
+  
   const isLoading = ref(false);
   const errorMessage = ref('');
   const pdfUrl = ref<string | null>(null);
   const pdfBlob = ref<Blob | null>(null);
-  const showPreview = ref(false); // Controla si mostrar la vista previa
+  const showPreview = ref(false); 
   const userStore = localStorage.getItem("user_id")
   const token = localStorage.getItem("token")
   const API_URL = import.meta.env.VITE_API_URL;
   
-  // Función para generar el reporte
   const generateReport = async () => {
     if (isLoading.value) return;
     
@@ -79,7 +76,6 @@
     pdfBlob.value = null;
     
     try {
-      // Obtener el ID del usuario del store
       const userId = userStore
       
       if (!userId) {
@@ -88,33 +84,28 @@
       
       console.log('Solicitando PDF...');
       
-      // Hacer la solicitud al endpoint
       const response = await axios({
         method: 'GET',
         url: `${API_URL}/reportes/pdf/user/${userId}`,
-        responseType: 'blob', // Importante para recibir datos binarios
+        responseType: 'blob', 
         headers: {
-          'Authorization': `Bearer ${token}` // Si usas token de autenticación
+          'Authorization': `Bearer ${token}` 
         }
       });
       
       console.log('Respuesta recibida:', response.status, response.headers);
       
-      // Verificar que la respuesta sea válida
       if (response.status !== 200) {
         throw new Error(`Error del servidor: ${response.status}`);
       }
       
-      // Verificar si el tipo de contenido es PDF
       const contentType = response.headers['content-type'];
       if (contentType && !contentType.includes('application/pdf')) {
         console.warn(`Tipo de contenido inesperado: ${contentType}`);
       }
       
-      // Crear blob del PDF
       const blob = new Blob([response.data], { type: 'application/pdf' });
       
-      // Verificar el tamaño del blob
       if (blob.size === 0) {
         throw new Error('El PDF generado está vacío');
       }
@@ -123,22 +114,17 @@
       pdfUrl.value = URL.createObjectURL(blob);
       console.log('PDF URL creada:', pdfUrl.value);
       
-      // Solo mostrar vista previa si estamos seguros que funciona en el entorno
       showPreview.value = true;
       
     } catch (error: any) {
       console.error('Error al generar el reporte:', error);
       
-      // Manejo detallado de errores
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          // El servidor respondió con un error
           errorMessage.value = `Error del servidor: ${error.response.status} - ${error.response.statusText}`;
         } else if (error.request) {
-          // La solicitud se realizó pero no se recibió respuesta
           errorMessage.value = 'No se recibió respuesta del servidor. Verifique su conexión.';
         } else {
-          // Error en la configuración de la solicitud
           errorMessage.value = `Error de configuración: ${error.message}`;
         }
       } else {

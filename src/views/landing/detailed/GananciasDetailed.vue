@@ -62,6 +62,8 @@ import IncomesChart from '@/components/charts/IncomesChart.vue';
 import { useFinancialData } from '@/helpers/charts';
 import { onMounted, ref, computed } from 'vue';
 import axios from '@/helpers/axios'
+import { secureAlert } from '@/helpers/succesAlert';
+import Swal from 'sweetalert2'
 
 const {incomesList, incomesByUser} = useFinancialData()
 const filterDateInput = ref('');
@@ -126,13 +128,23 @@ const resetFilter = () => {
 
 const deleteIncomes = async (id: number) => {
   try {
-    const response = await axios.delete(`${API_URL}/api/incomes/${id}`);
-    incomesList.value = incomesList.value.filter(income => income.id !== id);
-    alert('Eliminacion correcta');
+    const result = await secureAlert("¿Estás seguro de eliminar este ingreso?");
+    
+    if (result.isConfirmed) {
+      const response = await axios.delete(`${API_URL}/api/incomes/${id}`);
+      incomesList.value = incomesList.value.filter(income => income.id !== id);
+      
+      Swal.fire("Eliminado!", "El ingreso ha sido eliminado correctamente.", "success");
+      console.log(response.data);
+    } else if (result.isDenied) {
+      Swal.fire("Cancelado", "El ingreso no fue eliminado.", "info");
+    }
+
   } catch (err) {
-    alert('Algo falló al eliminar el ingreso');
+    Swal.fire("Error", "Algo falló al eliminar el ingreso.", "error");
   }
-}
+};
+
 
 onMounted(async() => {
   await incomesByUser();

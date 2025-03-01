@@ -69,6 +69,12 @@ const formatMessage = (content: string) => {
   return marked(content);
 };
 
+messages.value.push({
+  type: "bot",
+  content: "En que puedo ayudarte hoy?",
+  time: new Date().toLocaleTimeString().slice(0, 5),
+})
+
 const sendMessage = async () => {
   if (message.value.trim()) {
     const userMessage = {

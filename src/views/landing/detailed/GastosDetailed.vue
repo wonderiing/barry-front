@@ -63,6 +63,8 @@ import ExpensesChart from '@/components/charts/ExpensesChart.vue';
 import { onMounted, ref, computed } from 'vue';
 import { useFinancialData } from '@/helpers/charts';
 import axios from '@/helpers/axios';
+import { secureAlert } from '@/helpers/succesAlert';
+import Swal from 'sweetalert2'
 
 const { expensesList, expensesByUser } = useFinancialData();
 const filterDateInput = ref('');
@@ -127,13 +129,21 @@ const resetFilter = () => {
 
 const deleteExpense = async (id: number) => {
   try {
-    const endpoint = `${API_URL}/api/expenses/${id}`;
-    const response = await axios.delete(endpoint);
-    expensesList.value = expensesList.value.filter(expense => expense.id !== id);
-    console.log(response.data);
-    alert('eliminacion correcta');
+    const result = await secureAlert("¿Estás seguro de eliminar este gasto?");
+    
+    if (result.isConfirmed) {
+      const endpoint = `${API_URL}/api/expenses/${id}`;
+      const response = await axios.delete(endpoint);
+      expensesList.value = expensesList.value.filter(expense => expense.id !== id);
+      
+      Swal.fire("Eliminado!", "El gasto ha sido eliminado correctamente.", "success");
+      console.log(response.data);
+    } else if (result.isDenied) {
+      Swal.fire("Cancelado", "El gasto no fue eliminado.", "info");
+    }
+
   } catch (err) {
-    alert('Algo fallo');
+    Swal.fire("Error", "Algo falló al eliminar el gasto.", "error");
   }
 };
 

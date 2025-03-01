@@ -5,6 +5,7 @@
         <li><router-link :to="{name: 'chatbot'}" >Chatbot</router-link></li>
         <li><router-link :to="{name: 'crypto'}" >Crypto</router-link></li>
         <li><router-link :to="{name: 'dashboard'}" >Dashboard</router-link></li>
+        <li><router-link :to="{name: 'pdf'}" >Reportes</router-link></li>
         <li><a @click="deleteToken" >Logout</a></li>
       </ul>
     </nav>
@@ -15,23 +16,31 @@
   
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-
+import { secureAlert } from '@/helpers/succesAlert';
+import Swal from 'sweetalert2';
 const router = useRouter()
 
-const deleteToken = () => {
-
+const deleteToken = async () => {
   try {
+    const result = await secureAlert("¿Estás seguro de cerrar sesión?");
 
-    localStorage.removeItem('token')
-    localStorage.removeItem('user_id')
-    localStorage.removeItem('expiresIn')
-  
-    router.replace({name: 'login'})
+    if (result.isConfirmed) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('expiresIn');
+
+      Swal.fire("Cierre de sesión", "Has cerrado sesión correctamente.", "success");
+      router.replace({ name: 'login' });
+    } else if (result.isDenied) {
+      Swal.fire("Cancelado", "No se cerró sesión.", "info");
+    }
+
   } catch (err) {
-    console.error(err)
+    console.error(err);
+    Swal.fire("Error", "Ocurrió un problema al cerrar sesión.", "error");
   }
+};
 
-}
 
 </script>
 
