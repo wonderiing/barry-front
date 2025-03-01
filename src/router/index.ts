@@ -47,6 +47,7 @@ const router = createRouter({
     {
       path: '/soporte',
       name: 'soporte',
+      beforeEnter: [isAuthenticatedGuard],
       component: () => import('@/views/landing/SoporteView.vue')
     },
       {
