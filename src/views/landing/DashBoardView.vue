@@ -110,6 +110,7 @@ import ExpensesChart from '@/components/charts/ExpensesChart.vue';
 import IncomesChart from '@/components/charts/IncomesChart.vue';
 import { useFinancialData } from '@/helpers/charts';
 import axios from '@/helpers/axios';
+import '@/assets/dashboard.css'
 
 const API_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
