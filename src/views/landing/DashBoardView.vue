@@ -143,15 +143,14 @@ const years = computed(() => {
   return [currentYear - 2, currentYear - 1, currentYear, currentYear + 1];
 });
 
-// Formatear números para mejor visualización
 const formatNumber = (value) => {
   return new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }).format(value);
+  }).format(value).replace(',', '.');
 };
 
-// Mostrar notificación
+
 const showNotificationMessage = (message) => {
   notificationMessage.value = message;
   showNotification.value = true;
@@ -161,7 +160,6 @@ const showNotificationMessage = (message) => {
   }, 3000);
 };
 
-// Obtener datos financieros del mes seleccionado
 const infoByMonth = async () => {
   const userId = localStorage.getItem('user_id');
   
@@ -192,7 +190,6 @@ const infoByMonth = async () => {
   }
 };
 
-// Calcular balance neto
 const calculateBalance = () => {
   const incomes = Number(incomesMountPerMonth.value);
   const expenses = Number(expenseMountPerMonth.value);
@@ -205,7 +202,6 @@ const calculateBalance = () => {
   }
 };
 
-// Actualizar datos cuando cambia el mes o año
 const updateData = async () => {
   await infoByMonth();
   await expensesByUser();
@@ -213,14 +209,12 @@ const updateData = async () => {
   showNotificationMessage(`Datos actualizados para ${months[selectedMonth.value - 1]} ${selectedYear.value}`);
 };
 
-// Refrescar gráficos
 const refreshCharts = async () => {
   await expensesByUser();
   await incomesByUser();
   showNotificationMessage('Gráficos actualizados');
 };
 
-// Inicialización
 onMounted(async () => {
   await expensesByUser();
   await incomesByUser();
