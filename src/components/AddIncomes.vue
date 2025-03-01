@@ -1,5 +1,6 @@
 <template>
     <br>
+    <br>
     <div class="form-container">
       <h2>Registrar un Ingreso</h2>
       <form @submit.prevent="submitIncome">
@@ -14,7 +15,6 @@
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'ganancias'}">Volver</router-link>
         
       </form>
 
@@ -22,6 +22,7 @@
   </template>
 
 <script setup lang="ts">
+import { successAlert } from '@/helpers/succesAlert';
 import axios from '../helpers/axios';
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
@@ -40,7 +41,7 @@ const submitIncome = async() => {
         description: description.value,
         user_id: userId,
     })
-    alert('Registro Exitoso')
+    await successAlert("Ingreso registrado exitosamente")
     router.replace({name: 'ganancias'})
     } catch(err) {
         alert('algo fallo')

@@ -363,11 +363,10 @@
     }
     
     .iframe-container, .pdf-object {
-      height: 600px; /* Altura reducida para móviles pero aún mayor que la original */
+      height: 600px; 
     }
   }
   
-  /* Para pantallas muy grandes, permitir que el visualizador sea aún más alto */
   @media (min-width: 1200px) {
     .pdf-report-container {
       max-width: 1200px;

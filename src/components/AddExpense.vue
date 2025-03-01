@@ -1,5 +1,6 @@
 <template>
     <br>
+    <br>
     <div class="form-container">
       <h2>Registrar un Gasto</h2>
       <form @submit.prevent="submitExpense">
@@ -21,7 +22,7 @@
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'gastos'}">Volver</router-link>
+        
         
       </form>
 
@@ -34,6 +35,7 @@ import axios from '../helpers/axios';
 import { onMounted, ref } from 'vue';
 import type { Category } from '@/interfaces/category.interface';
 import { useRouter } from 'vue-router';
+import { successAlert } from '@/helpers/succesAlert';
 const API_URL = import.meta.env.VITE_API_URL;
 
 
@@ -59,7 +61,7 @@ const submitExpense = async() => {
         category_id: categoryId.value
     })
     console.log(response.data)
-    alert('Registro Exitoso')
+    await successAlert("Gasto registrado exitosamente")
     router.replace({name: 'gastos'})
     } catch(err) {
         alert('algo fallo')
@@ -143,8 +145,10 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: rgb(233, 0, 0);
 }
+
+
 
 @media (max-width: 600px) {
   .form-container {

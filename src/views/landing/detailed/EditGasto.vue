@@ -21,7 +21,6 @@
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'gastos'}">Volver</router-link>
         
       </form>
 
@@ -36,6 +35,7 @@ import {onMounted, ref} from 'vue'
 import type { ExpensesByUser } from '@/interfaces/expenses.interface';
 import { useRoute, useRouter } from 'vue-router';
 import axios  from '@/helpers/axios';
+import { successAlert } from '@/helpers/succesAlert';
 
 const mount = ref()
 const description = ref()
@@ -71,7 +71,7 @@ const editExpense = async() => {
             category_id: categoryId.value
         })
         console.log(response.data)
-        alert('Edicion exitosa')
+        await successAlert("Edicion exitosa")
         backTo.replace({name: 'gastos'})
     }
 }
@@ -153,7 +153,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #ff0000;
 }
 
 @media (max-width: 600px) {

@@ -14,7 +14,6 @@
         </div>
         <button type="submit">Registrar</button>
         <br>
-        <router-link :to="{name: 'ganancias'}">Volver</router-link>
         
       </form>
 
@@ -29,6 +28,7 @@ import type { IncomesByUser } from '@/interfaces/incomes.interface';
 import { useRoute } from 'vue-router';
 import axios  from '@/helpers/axios';
 import { useRouter } from 'vue-router';
+import { successAlert } from '@/helpers/succesAlert';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -57,7 +57,7 @@ const editExpense = async() => {
             description: description.value,
         })
         console.log(response.data)
-        alert('Edicion exitosa')
+        await successAlert("Edicion exitosa")
         backTo.replace({name : 'ganancias'})
 
     }
@@ -139,7 +139,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #ff0000;
 }
 
 @media (max-width: 600px) {
