@@ -2,7 +2,7 @@
 :root {
   --primary-color: #4361ee;
   --secondary-color: #4cc9f0;
-  --expense-color: #ef476f;
+  --expense-color: #fd003b;
   --income-color: #06d6a0;
   --neutral-color: #073b4c;
   --background-color: #f8f9fa;
@@ -279,7 +279,7 @@ body {
 }
 
 .expense-btn:hover {
-  background-color: #d13960;
+  background-color: #ff0040;
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(239, 71, 111, 0.3);
 }
