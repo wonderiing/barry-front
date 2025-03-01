@@ -10,6 +10,7 @@
       <li><router-link :to="{name: 'crypto'}">Crypto</router-link></li>
       <li><router-link :to="{name: 'dashboard'}">Dashboard</router-link></li>
       <li><router-link :to="{name: 'pdf'}">Reportes</router-link></li>
+      <li><router-link :to="{name: 'soporte'}">Soporte</router-link></li>
       <li><a @click="deleteToken">Logout</a></li>
     </ul>
   </nav>
@@ -25,7 +26,7 @@ import Swal from 'sweetalert2';
 
 const router = useRouter();
 
-// Estado para el menú desplegable
+
 const isMenuActive = ref(false);
 
 const toggleMenu = () => {

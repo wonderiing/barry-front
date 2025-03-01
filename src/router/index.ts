@@ -33,7 +33,9 @@ const router = createRouter({
           path: '/register',
           name: 'register',
           component: RegisterView
-        }
+        },
+
+        
       ],
     
     },
@@ -41,6 +43,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: LandingView
+    },
+    {
+      path: '/soporte',
+      name: 'soporte',
+      component: () => import('@/views/landing/SoporteView.vue')
     },
       {
         path: '/auth/success',
